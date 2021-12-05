@@ -531,5 +531,18 @@ describe('compiler: expression transform', () => {
       expect(code).toMatch(`_ctx.options`)
       expect(code).toMatchSnapshot()
     })
+
+    test('TS mode', () => {
+      const { code } = compileWithBindingMetadata(
+        `<div>{{ props }} {{ setup }} {{ setupConst }} {{ data }} {{ options }}</div>`,
+        { isTS: true }
+      )
+      expect(code).toMatch(`$props.props`)
+      expect(code).toMatch(`$setup.setup`)
+      expect(code).toMatch(`$data.data`)
+      expect(code).toMatch(`$options.options`)
+      expect(code).toMatch(`return function render(\n//@ts-ignore\n_ctx: any,_cache: any,$props: any,$setup: any,$data: any,$options: any\n)`)
+      expect(code).toMatchSnapshot()
+    })
   })
 })

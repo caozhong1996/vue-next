@@ -231,7 +231,7 @@ export function generate(
   }
   const signature =
     !__BROWSER__ && options.isTS
-      ? args.map(arg => `${arg}: any`).join(',')
+      ? `\n//@ts-ignore\n${args.map(arg => `${arg}: any`).join(',')}\n`
       : args.join(', ')
 
   if (isSetupInlined) {
